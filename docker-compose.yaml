@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/web
+    depends_on:
+      - db_postgres
+      - db_redis
+  db_postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  db_redis:
+    image: redis
+    environment:
+      - REDIS_USER=redis
+      - REDIS_PASSWORD=redis

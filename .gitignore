@@ -4,4 +4,8 @@
 # cache
 *__pycache__*
 
+# modules
 node_modules
+
+# etc
+db.sqlite3

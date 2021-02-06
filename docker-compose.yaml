@@ -1,23 +1,67 @@
 version: "3"
 
 services:
-  web:
-    build: .
+  backend:
+    container_name: django
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     command: python manage.py runserver 0:8000
+    restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
-      - .:/web
+      - ./backend:/var/backend
     depends_on:
       - db_postgres
       - db_redis
+    networks:
+      - app
+  frontend:
+    container_name: next_app
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/var/frontend
+    depends_on:
+      - backend
+    networks:
+      - app
   db_postgres:
     image: postgres
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    networks:
+      - app
   db_redis:
     image: redis
+    ports:
+      - "6379:6379"
     environment:
       - REDIS_USER=redis
       - REDIS_PASSWORD=redis
+    networks:
+      - app
+  nginx:
+    container_name: nginx
+    image: nginx:1.19-alpine
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/backend
+      - ./frontend:/var/frontend
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge
+    external: true

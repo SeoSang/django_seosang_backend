@@ -1,6 +1,6 @@
 FROM node:14.15-alpine as frontend-stage
 
-LABEL maintainer="SeoSang"
+LABEL maintainer="ddrrpg"
 
 WORKDIR /var/frontend
 

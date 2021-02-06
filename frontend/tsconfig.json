@@ -5,7 +5,7 @@
   "compilerOptions": {
     "allowJs": true, // 자바스크립트 파일 컴파일 허용 여부.
     // import add from './add.js' 와 같이 js파일 import 허용
-    "allowSyntheticDefaultImports": false, // export default 를 export 한 값들을 가지는 객체로 설정
+    "allowSyntheticDefaultImports": true, // export default 를 export 한 값들을 가지는 객체로 설정
     // export class Foo { member: string; } 을 할시 (b.ts)
     // export default { Foo } 가 기본으로 설정된다.
     "allowUnreachableCode": false, // 도달 불가능한 코드에 대한 허용 여부.
@@ -60,11 +60,7 @@
     // https://github.com/Microsoft/TypeScript/issues/2499
     "jsx": "preserve", // jsx 지원
     "jsxFactory": "React.createElement", // jsx 팩토리 함수 설정,
-    "lib": [
-      "ES2015",
-      "ES2016",
-      "ES2017"
-    ], // 컴파일에 포함될 라이브러리 파일 목록
+    "lib": ["ES2015", "ES2016", "ES2017", "DOM"], // 컴파일에 포함될 라이브러리 파일 목록
     // target 옵션 값에 따라 기본으로 포함되는 라이브러리가 있다.
     // lib 옵션 설정시 그 라이브러리 파일만 포함된다.
     // target ES5 -> DOM,ES5,ScriptHost
@@ -200,18 +196,11 @@
     // ["node", "lodash", "express"] 설정시
     // ./node_modules/@types/node, ./node_modules/@types/lodash, ./node_modules/@types/express
     // 위 3개를 가져오고 node_modules/@types/* 의 다른 패키지는 가져오지 않음
-    "watch": true // 파일 변경시 컴파일
-    ,
+    "watch": true, // 파일 변경시 컴파일
     "esModuleInterop": true,
     "module": "esnext",
     "resolveJsonModule": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

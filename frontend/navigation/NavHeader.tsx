@@ -20,10 +20,10 @@ const NavHeader = ({
       />
       <div style={{ paddingBottom: 16 }} />
       <Typography variant={"h6"} noWrap>
-        Sandra Adams
+        SeoSang
       </Typography>
       <Typography color={"textSecondary"} noWrap gutterBottom>
-        sandra_88@gmail.com
+        ddrrpg@naver.com
       </Typography>
     </div>
     <Divider />

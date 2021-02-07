@@ -71,7 +71,7 @@ const styles: any = ({
 const MainHeader = ({ classes, screen }) => (
   <>
     <Typography noWrap color={"textSecondary"} className={classes.header}>
-      Layout v4.0.0
+      Title
     </Typography>
     <div className={classes.grow} />
     <div className={classes.search}>

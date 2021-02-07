@@ -66,7 +66,4 @@ const NavContent = () => (
   </List>
 )
 
-NavContent.propTypes = {}
-NavContent.defaultProps = {}
-
 export default NavContent

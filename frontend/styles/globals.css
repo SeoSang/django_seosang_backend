@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url(./fonts/NanumBarunGothic.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Helvetica Neu";
+  src: url(./fonts/HelveticaNeueLTPro-Md.otf) format("truetype");
+}

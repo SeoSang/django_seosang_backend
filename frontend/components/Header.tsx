@@ -1,12 +1,20 @@
-import React from "react"
 import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import { isWidthUp } from "@material-ui/core/withWidth"
-import InputBase from "@material-ui/core/InputBase"
+import React from "react"
+import { paleteState } from "state/theme"
+import { useTypicalStyles } from "styles/cssStyle"
+
 import Icon from "@material-ui/core/Icon"
 import IconButton from "@material-ui/core/IconButton"
+import InputBase from "@material-ui/core/InputBase"
+import { styled, withStyles } from "@material-ui/core/styles"
+import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
+import { isWidthUp } from "@material-ui/core/withWidth"
 import { Styles } from "@material-ui/styles"
+import { getHeader } from "@mui-treasury/layout"
+import { useRecoilState } from "recoil"
+
+const Header = getHeader(styled)
 
 const styles: any = ({
   spacing,
@@ -68,54 +76,63 @@ const styles: any = ({
   },
 })
 
-const MainHeader = ({ classes, screen }) => (
-  <>
-    <Typography noWrap color={"textSecondary"} className={classes.header}>
-      Title
-    </Typography>
-    <div className={classes.grow} />
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <Icon>search</Icon>
-      </div>
-      <InputBase
-        placeholder='Search…'
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-      />
-    </div>
-    {screen === "xs" && (
-      <IconButton>
-        <Icon>more_vert</Icon>
-      </IconButton>
-    )}
-    {screen === "sm" && (
-      <>
-        <IconButton>
-          <Icon>favorite</Icon>
-        </IconButton>
-        <IconButton>
-          <Icon>more_vert</Icon>
-        </IconButton>
-      </>
-    )}
-    {isWidthUp("md", screen) && (
-      <>
-        <IconButton>
-          <Icon>favorite</Icon>
-        </IconButton>
-        <IconButton>
-          <Icon>phone</Icon>
-        </IconButton>
-        <IconButton>
-          <Icon>camera</Icon>
-        </IconButton>
-      </>
-    )}
-  </>
-)
+const MainHeader = ({ classes, screen }) => {
+  const [palette, setPalette] = useRecoilState(paleteState)
+  const sty = useTypicalStyles()
+
+  return (
+    <>
+      <Header className={sty.priMainBack}>
+        <Toolbar className={sty.priMainBack}>
+          <Typography noWrap color={"textSecondary"} className={classes.header}>
+            Title
+          </Typography>
+          <div className={classes.grow} />
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <Icon>search</Icon>
+            </div>
+            <InputBase
+              placeholder='Search…'
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+          </div>
+          {screen === "xs" && (
+            <IconButton>
+              <Icon>more_vert</Icon>
+            </IconButton>
+          )}
+          {screen === "sm" && (
+            <>
+              <IconButton>
+                <Icon>favorite</Icon>
+              </IconButton>
+              <IconButton>
+                <Icon>more_vert</Icon>
+              </IconButton>
+            </>
+          )}
+          {isWidthUp("md", screen) && (
+            <Toolbar>
+              <IconButton>
+                <Icon>favorite</Icon>
+              </IconButton>
+              <IconButton>
+                <Icon>phone</Icon>
+              </IconButton>
+              <IconButton>
+                <Icon>camera</Icon>
+              </IconButton>
+            </Toolbar>
+          )}
+        </Toolbar>
+      </Header>
+    </>
+  )
+}
 
 MainHeader.propTypes = {
   screen: PropTypes.string,

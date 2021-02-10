@@ -14,7 +14,6 @@
     "@mui-treasury/layout": "^4.5.0",
     "@mui-treasury/mockup": "^1.2.12",
     "@types/styled-components": "^5.1.7",
-    "loadash": "^1.0.0",
     "lodash": "^4.17.20",
     "material-ui-color-picker": "^3.5.1",
     "next": "10.0.6",

@@ -1,38 +1,30 @@
-import React, { useEffect, useState } from "react"
-import Head from "next/head"
-import styled from "styled-components"
 import _ from "lodash"
+import React, { useEffect, useState } from "react"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { paleteState, themeState } from "state/theme"
+import styled from "styled-components"
+import { getTheme } from "styles/theme"
 
-import Toolbar from "@material-ui/core/Toolbar"
 import CssBaseline from "@material-ui/core/CssBaseline"
-import { ThemeProvider, StylesProvider, Theme } from "@material-ui/core/styles"
-import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil"
-import {
-  Root,
-  getHeader,
-  getDrawerSidebar,
-  getSidebarTrigger,
-  getSidebarContent,
+import Toolbar from "@material-ui/core/Toolbar"
+import { StylesProvider, ThemeProvider, useTheme } from "@material-ui/styles"
+import Layout, {
   getCollapseBtn,
   getContent,
+  getDrawerSidebar,
   getFooter,
+  getHeader,
+  getSidebarContent,
+  getSidebarTrigger,
+  Root,
 } from "@mui-treasury/layout"
-
 import {
-  getDefaultScheme,
-  getStandardScheme,
-  getFixedScheme,
-  getContentBasedScheme,
-  getCozyScheme,
-  getMuiTreasuryScheme,
-} from "@mui-treasury/layout/presets"
-
-import { getTheme } from "../styles/theme"
-import NavHeader from "../navigation/NavHeader"
-import NavContent from "../navigation/NavContent"
-import MainHeader from "../components/Header"
-import { createStyles, makeStyles } from "@material-ui/styles"
-import { paleteState, themeState } from "state/theme"
+  ContentMockUp,
+  FooterMockUp,
+  HeaderMockUp,
+  NavContentMockUp,
+  NavHeaderMockUp,
+} from "@mui-treasury/mockup/layout"
 
 const Header = getHeader(styled)
 const DrawerSidebar = getDrawerSidebar(styled)
@@ -42,14 +34,32 @@ const CollapseBtn = getCollapseBtn(styled)
 const Content = getContent(styled)
 const Footer = getFooter(styled)
 
-const useStyles = (custom: Theme) =>
-  makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        backgroundColor: custom.palette.primary.main,
-      },
+const scheme = Layout()
+
+scheme.configureHeader((builder) => {
+  builder
+    .registerConfig("xs", {
+      position: "sticky",
     })
-  )
+    .registerConfig("md", {
+      position: "relative", // won't stick to top when scroll down
+    })
+})
+
+scheme.configureEdgeSidebar((builder) => {
+  builder
+    .create("unique_id", { anchor: "left" })
+    .registerTemporaryConfig("xs", {
+      width: "auto", // 'auto' is only valid for temporary variant
+    })
+    .registerPermanentConfig("md", {
+      width: 256, // px, (%, rem, em is compatible)
+      collapsible: true,
+      collapsedWidth: 64,
+    })
+})
+
+scheme.enableAutoCollapse("unique_id", "md")
 
 const DEFAULT_THEME = getTheme()
 
@@ -63,30 +73,35 @@ const MainLayout = ({ children }) => {
   }, [changingTheme])
 
   return (
-    // <StylesProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      {/* <Root scheme={getStandardScheme()}> */}
-      {/* {({ state: { sidebar } }) => ( */}
-      {/* <> */}
-      {/* <MainHeader /> */}
-      {/* <DrawerSidebar sidebarId='primarySidebar'> */}
-      {/* <SidebarContent> */}
-      {/* <NavHeader collapsed={sidebar.primarySidebar.collapsed} /> */}
-      {/* <NavContent /> */}
-      {/* </SidebarContent> */}
-      {/* <CollapseBtn /> */}
-      {/* </DrawerSidebar> */}
-      {/* <Content> */}
-      {children}
-      {/* </Content> */}
-      {/* <Footer>Footer</Footer> */}
-      {/* </> */}
-      {/* )} */}
-      {/* </Root> */}
-    </ThemeProvider>
-    // </StylesProvider>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Root theme={theme} scheme={scheme}>
+          {({ state: { sidebar } }) => (
+            <>
+              <CssBaseline />
+              <Header color='primary'>
+                <Toolbar>
+                  <SidebarTrigger sidebarId='unique_id' />
+                  <HeaderMockUp />
+                </Toolbar>
+              </Header>
+              <DrawerSidebar sidebarId='unique_id'>
+                <SidebarContent>
+                  <NavHeaderMockUp collapsed={sidebar.unique_id.collapsed} />
+                  <NavContentMockUp />
+                </SidebarContent>
+                <CollapseBtn />
+              </DrawerSidebar>
+              <Content>{children}</Content>
+              <Footer>
+                <FooterMockUp />
+              </Footer>
+            </>
+          )}
+        </Root>
+        <CssBaseline />
+      </ThemeProvider>
+    </StylesProvider>
   )
 }
 

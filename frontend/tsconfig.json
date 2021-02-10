@@ -201,6 +201,11 @@
     "module": "esnext",
     "resolveJsonModule": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "layout/layout_module/Root.js"
+  ],
   "exclude": ["node_modules"]
 }

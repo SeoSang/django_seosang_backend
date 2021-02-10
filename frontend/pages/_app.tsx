@@ -3,6 +3,7 @@ import MainLayout from "layout/MainLayout"
 import Head from "next/head"
 import React, { useEffect } from "react"
 import { RecoilRoot, useRecoilState } from "recoil"
+import "../styles/globals.css"
 
 import { getTheme } from "../styles/theme"
 

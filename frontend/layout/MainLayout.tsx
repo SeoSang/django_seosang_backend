@@ -26,6 +26,9 @@ import {
   NavHeaderMockUp,
 } from "@mui-treasury/mockup/layout"
 import NavContent from "navigation/NavContent"
+import NavHeader from "navigation/NavHeader"
+import MainHeader from "components/MainHeader"
+import { makeStyles } from "@material-ui/core"
 
 const Header = getHeader(styled)
 const DrawerSidebar = getDrawerSidebar(styled)
@@ -64,10 +67,17 @@ scheme.enableAutoCollapse("unique_id", "md")
 
 const DEFAULT_THEME = getTheme()
 
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    background: theme.palette.primary.main,
+  },
+}))
+
 const MainLayout = ({ children }) => {
   const [palette, setPalette] = useRecoilState(paleteState)
   const changingTheme = useRecoilValue(themeState)
   const [theme, setTheme] = useState(DEFAULT_THEME)
+  const st = useStyles()
 
   useEffect(() => {
     setTheme(_.cloneDeep(changingTheme))
@@ -81,14 +91,14 @@ const MainLayout = ({ children }) => {
             <>
               <CssBaseline />
               <Header color='primary'>
-                <Toolbar>
-                  <SidebarTrigger sidebarId='unique_id' />
-                  <HeaderMockUp />
+                <Toolbar className={st.toolbar}>
+                  <SidebarTrigger color='secondary' sidebarId='unique_id' />
+                  <MainHeader />
                 </Toolbar>
               </Header>
               <DrawerSidebar sidebarId='unique_id'>
                 <SidebarContent>
-                  <NavHeaderMockUp collapsed={sidebar.unique_id.collapsed} />
+                  <NavHeader collapsed={sidebar.unique_id.collapsed} />
                   <NavContent />
                 </SidebarContent>
                 <CollapseBtn />

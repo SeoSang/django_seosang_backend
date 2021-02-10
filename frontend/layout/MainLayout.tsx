@@ -25,6 +25,7 @@ import {
   NavContentMockUp,
   NavHeaderMockUp,
 } from "@mui-treasury/mockup/layout"
+import NavContent from "navigation/NavContent"
 
 const Header = getHeader(styled)
 const DrawerSidebar = getDrawerSidebar(styled)
@@ -88,7 +89,7 @@ const MainLayout = ({ children }) => {
               <DrawerSidebar sidebarId='unique_id'>
                 <SidebarContent>
                   <NavHeaderMockUp collapsed={sidebar.unique_id.collapsed} />
-                  <NavContentMockUp />
+                  <NavContent />
                 </SidebarContent>
                 <CollapseBtn />
               </DrawerSidebar>

@@ -2,17 +2,19 @@ from django.db import models
 
 class User(models.Model):
   SEX_CHOICES = (
-    ('Male', 'Male'),
-    ('Female', 'Female')
+    ('male', 'male'),
+    ('female', 'female')
+    ('etc', 'etc')
   )
   
   age = models.IntegerField(default=0)
   sex = models.CharField(choices=SEX_CHOICES, max_length=20)
   email = models.EmailField(max_length=100, unique=True)
   password = models.CharField(max_length=100)
-  last_name = models.CharField(max_length=20)
-  created_at = models.DateField(auto_now=True)
   first_name = models.CharField(max_length=20)
+  last_name = models.CharField(max_length=20)
+  nick_name = models.CharField(max_length=20)
+  created_at = models.DateField(auto_now=True)
   profile_img = models.ImageField()
   
   # Metadata

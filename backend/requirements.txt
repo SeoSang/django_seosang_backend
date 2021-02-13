@@ -1,3 +1,9 @@
 Django
 psycopg2
+
+djangorestframework
+markdown
+django-filter
+
 Pillow
+ujson

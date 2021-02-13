@@ -9,3 +9,7 @@ node_modules
 
 # etc
 db.sqlite3
+
+# log
+.log
+backend/logs

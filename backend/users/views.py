@@ -1,30 +1,39 @@
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 
 
-import ujson
+import bcrypt
 import logging
 from rest_framework import status, viewsets
 
-from . import validators
-from .forms import LoginForm
 from .models import User
 from .serializers import LoginSerializer
+from .schema import UserSchema
 
 logger = logging.getLogger(__name__)
+user_schema = UserSchema()
 
 @require_http_methods(["POST"])
-def login_view(request):
-  status_code = status.HTTP_200_OK
-  body = ujson.loads(request.body)
-  validation = validators.validate_api(body)
-  # logger.info(f'Get Attributes {body}')
+def login_view(req):
+  result = user_schema.login_validator(req)
   
-  return HttpResponse("You're looking at question")
+  # req validation
+  if isinstance(result, str):
+    return JsonResponse(data={"message" : result}, 
+                        status=400)
+  
+  me = User.objects.get(name=result.username)
+  if bcrypt.checkpw(result.password.encode('utf-8'),
+                    me.password):
+    return JsonResponse(data={"message" : "Login Success!"},
+                        status=200)
+  else:
+    return JsonResponse(data={"message" : "Login Failed.."},
+                        status=401)
 
 class Login_restful_main(viewsets.ModelViewSet):
-  queryset = User.obejcts.all()
+  queryset = User.objects.all()
   serializer_class = LoginSerializer
   

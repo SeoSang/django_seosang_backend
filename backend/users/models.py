@@ -10,12 +10,15 @@ class User(AbstractUser):
   
   age = models.IntegerField(default=0)
   sex = models.CharField(choices=SEX_CHOICES, max_length=20)
+  email = models.EmailField(unique=True)
+  phone = models.CharField(blank=True, max_length=100)
+  created = models.DateTimeField(auto_now_add=True)
   nick_name = models.CharField(max_length=20)
-  profile_img = models.ImageField()
+  profile_img = models.ImageField(blank=True, null=True)
   
   # Metadata
   class Meta:
-      ordering = ['id']
+      ordering = ['created']
 
   # def __str__(self):
   #     """String for representing the MyModelName object (in Admin site etc.)."""

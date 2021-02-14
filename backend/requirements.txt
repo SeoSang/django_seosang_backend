@@ -1,9 +1,15 @@
 Django
 psycopg2
 
+# rest api
 djangorestframework
 markdown
 django-filter
 
+# module
 Pillow
+
+# custom
 ujson
+bcrypt
+jsonschema

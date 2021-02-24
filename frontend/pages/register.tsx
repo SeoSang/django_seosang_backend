@@ -12,17 +12,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
-
-export interface RegisterFormData {
-  age: number
-  sex: "male" | "female" | "etc"
-  email: string
-  password: string
-  first_name: string
-  last_name: string
-  nick_name: string
-  // profile_img = models.ImageField()
-}
+import { RegisterFormData } from "api/user"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -66,13 +56,9 @@ const FormValidator = (errors: any) => {
 
 export default function Register() {
   const classes = useStyles()
-  const {
-    register: formRegister,
-    handleSubmit,
-    watch,
-    getValues,
-    errors,
-  } = useForm<RegisterFormData>()
+  const { register: formRegister, handleSubmit, watch, getValues, errors } = useForm<
+    RegisterFormData
+  >()
   const router = useRouter()
   const [validateText, setValidateText] = useState<string>("")
 
@@ -195,7 +181,8 @@ export default function Register() {
                 fullWidth
                 color='primary'
                 variant='contained'
-                onClick={onSubmitDoubleCheck}>
+                onClick={onSubmitDoubleCheck}
+              >
                 Check
               </Button>
             </Grid>
@@ -218,7 +205,8 @@ export default function Register() {
             fullWidth
             variant='contained'
             color='primary'
-            className={classes.submit}>
+            className={classes.submit}
+          >
             Register
           </Button>
           <Grid container justify='flex-end'>
